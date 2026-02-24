@@ -13,14 +13,14 @@ from datetime import date
 
 logger = logging.getLogger(__name__)
 
-# Try to import nbainjuries package
+# Try to import nbainjuries package (requires Java/JVM to be installed)
 try:
     import nbainjuries
     INJURIES_AVAILABLE = True
     logger.info("nbainjuries loaded successfully")
-except ImportError:
+except Exception:
     INJURIES_AVAILABLE = False
-    logger.error("nbainjuries not installed! Run: pip install nbainjuries")
+    logger.warning("nbainjuries not available (requires Java — injury data will be skipped)")
 
 # --- Simple in-memory cache ---
 _cache = {}
