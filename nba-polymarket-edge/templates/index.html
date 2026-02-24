@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBA Polymarket Edge</title>
+
+  <!-- Google Font: Outfit — clean, modern, great for sports UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Our custom styles -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <!-- ===================================================
+       HEADER
+       =================================================== -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">NBA <span class="logo-accent">Polymarket Edge</span></span>
+      </div>
+      <div class="date-badge" id="currentDate"></div>
+    </div>
+    <div class="header-right">
+      <div class="refresh-status" id="refreshStatus">
+        <span class="refresh-dot" id="refreshDot"></span>
+        <span id="lastUpdated">Loading...</span>
+      </div>
+      <button class="btn-refresh" id="refreshBtn" onclick="refreshData()">
+        <span class="refresh-icon">↻</span> Refresh
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================================================
+       LOADING STATE
+       =================================================== -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Fetching game data...</p>
+      <p class="loading-subtext">Pulling from Polymarket, NBA.com, and sportsbooks</p>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       ERROR STATE
+       =================================================== -->
+  <div class="error-screen hidden" id="errorScreen">
+    <div class="error-content">
+      <div class="error-icon">⚠️</div>
+      <h2>Failed to Load Data</h2>
+      <p id="errorMessage">Something went wrong. Check the terminal for details.</p>
+      <button class="btn-primary" onclick="refreshData()">Try Again</button>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       MAIN CONTENT
+       =================================================== -->
+  <main class="app-main hidden" id="mainContent">
+
+    <!-- VALUE ALERTS BANNER -->
+    <section class="alerts-section" id="alertsSection">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🎯</span> Value Alerts
+          <span class="badge" id="alertCount">0</span>
+        </h2>
+      </div>
+      <div class="alerts-container" id="alertsContainer">
+        <p class="empty-state">No significant edges detected yet</p>
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-item">
+        <span class="stat-value" id="statGames">—</span>
+        <span class="stat-label">Games Today</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="statPoly">—</span>
+        <span class="stat-label">Polymarket Markets</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="statAlerts">—</span>
+        <span class="stat-label">Value Alerts</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value" id="statInjuries">—</span>
+        <span class="stat-label">Teams Injured</span>
+      </div>
+    </div>
+
+    <!-- GAMES LIST -->
+    <section class="games-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🏀</span> Tonight's Games
+        </h2>
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('cards')" id="viewCards">Cards</button>
+          <button class="view-btn" onclick="setView('compact')" id="viewCompact">Compact</button>
+        </div>
+      </div>
+      <div class="games-container" id="gamesContainer">
+        <!-- Game cards are rendered here by JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================
+       GAME DETAIL MODAL
+       =================================================== -->
+  <div class="modal-overlay hidden" id="modalOverlay" onclick="closeModal()">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Game Detail</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       NO GAMES STATE
+       =================================================== -->
+  <div class="no-games-screen hidden" id="noGamesScreen">
+    <div class="no-games-content">
+      <div class="no-games-icon">🏀</div>
+      <h2>No Games Today</h2>
+      <p>No NBA games are scheduled for today. Check back tomorrow!</p>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       FOOTER
+       =================================================== -->
+  <footer class="app-footer">
+    <p>Data from Polymarket, NBA.com, & The Odds API • For entertainment purposes only • Not financial advice</p>
+  </footer>
+
+  <!-- Our JavaScript app logic -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

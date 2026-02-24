@@ -1,0 +1,1184 @@
+/* ============================================================
+   NBA Polymarket Edge — Polymarket-Inspired Stylesheet
+   Inspired by Polymarket's probability-first, clean dark UI
+   ============================================================ */
+
+/* ---- CSS Variables ---- */
+:root {
+  /* Polymarket-style backgrounds */
+  --bg-base:        #0f0f14;
+  --bg-surface:     #17171f;
+  --bg-card:        #1e1e28;
+  --bg-card-hover:  #23232f;
+  --bg-elevated:    #28283a;
+  --bg-input:       #1a1a24;
+
+  /* Borders */
+  --border-subtle:  #2a2a3a;
+  --border-default: #35354a;
+  --border-muted:   #45455a;
+
+  /* Text */
+  --text-primary:   #f0f0f8;
+  --text-secondary: #9898b8;
+  --text-muted:     #60607a;
+  --text-dim:       #404058;
+
+  /* Polymarket signature teal */
+  --poly-teal:      #00d4b4;
+  --poly-teal-dim:  rgba(0, 212, 180, 0.15);
+  --poly-teal-glow: rgba(0, 212, 180, 0.08);
+
+  /* Yes/No colors — Polymarket style */
+  --yes-color:      #00d4b4;   /* Teal = Yes / Favorite */
+  --no-color:       #ff6b81;   /* Pink-red = No / Underdog */
+  --yes-bg:         rgba(0, 212, 180, 0.1);
+  --no-bg:          rgba(255, 107, 129, 0.1);
+  --yes-border:     rgba(0, 212, 180, 0.25);
+  --no-border:      rgba(255, 107, 129, 0.25);
+
+  /* Alert / signal colors */
+  --green:          #22c55e;
+  --green-bg:       rgba(34, 197, 94, 0.1);
+  --green-border:   rgba(34, 197, 94, 0.25);
+
+  --yellow:         #eab308;
+  --yellow-bg:      rgba(234, 179, 8, 0.1);
+  --yellow-border:  rgba(234, 179, 8, 0.25);
+
+  --red:            #ef4444;
+  --red-bg:         rgba(239, 68, 68, 0.1);
+  --red-border:     rgba(239, 68, 68, 0.25);
+
+  --orange:         #f97316;
+  --orange-bg:      rgba(249, 115, 22, 0.1);
+
+  /* Sportsbook blue */
+  --book-color:     #6e8efb;
+  --book-bg:        rgba(110, 142, 251, 0.1);
+
+  /* Typography */
+  --font-family:    'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:      'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Spacing */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   32px;
+
+  /* Border radius */
+  --radius-xs:  4px;
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
+  --shadow-modal: 0 24px 64px rgba(0,0,0,0.8);
+
+  --transition: 0.12s ease;
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-family);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: var(--font-family); cursor: pointer; border: none; outline: none; }
+a { color: var(--poly-teal); text-decoration: none; }
+
+/* ---- Utilities ---- */
+.hidden { display: none !important; }
+
+/* ============================================================
+   HEADER — Polymarket-style sticky nav
+   ============================================================ */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-md);
+  height: 56px;
+  background: rgba(15, 15, 20, 0.92);
+  border-bottom: 1px solid var(--border-subtle);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+}
+
+.logo-icon { font-size: 18px; }
+
+.logo-accent {
+  background: linear-gradient(135deg, var(--poly-teal), #6e8efb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.date-badge {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid var(--border-subtle);
+  font-weight: 500;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.refresh-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.refresh-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  transition: all 0.3s;
+}
+.refresh-dot.stale { background: var(--yellow); box-shadow: 0 0 8px var(--yellow); }
+.refresh-dot.loading { animation: pulse 1s infinite; }
+
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+.btn-refresh {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  transition: all var(--transition);
+  letter-spacing: 0.2px;
+}
+.btn-refresh:hover { background: var(--bg-card-hover); color: var(--text-primary); border-color: var(--border-muted); }
+.btn-refresh:active { transform: scale(0.97); }
+
+.refresh-icon { display: inline-block; transition: transform 0.3s; }
+.btn-refresh.spinning .refresh-icon { animation: spin 0.7s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ============================================================
+   LOADING / ERROR SCREENS
+   ============================================================ */
+.loading-screen, .error-screen, .no-games-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 56px);
+  padding: var(--space-xl);
+}
+
+.loading-content, .error-content, .no-games-content {
+  text-align: center;
+  max-width: 300px;
+}
+
+.loading-spinner {
+  width: 44px;
+  height: 44px;
+  border: 2.5px solid var(--bg-elevated);
+  border-top-color: var(--poly-teal);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto var(--space-lg);
+}
+
+.loading-text {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+.loading-subtext { font-size: 13px; color: var(--text-muted); }
+
+.error-icon, .no-games-icon { font-size: 44px; margin-bottom: var(--space-md); }
+.error-content h2, .no-games-content h2 { font-size: 20px; font-weight: 700; margin-bottom: var(--space-sm); }
+.error-content p, .no-games-content p { color: var(--text-secondary); font-size: 14px; margin-bottom: var(--space-lg); }
+
+.btn-primary {
+  padding: 10px 24px;
+  background: var(--poly-teal);
+  color: #000;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 700;
+  transition: all var(--transition);
+}
+.btn-primary:hover { opacity: 0.9; }
+
+/* ============================================================
+   MAIN LAYOUT
+   ============================================================ */
+.app-main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.2px;
+}
+.section-icon { font-size: 16px; }
+
+/* ============================================================
+   VALUE ALERTS — Polymarket prediction cards style
+   ============================================================ */
+.alerts-section {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Alert card: horizontal layout like Polymarket market rows */
+.alert-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 12px var(--space-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.alert-card:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.alert-card:active { transform: translateY(0); }
+
+.alert-card.signal-green { background: var(--green-bg); border-color: var(--green-border); }
+.alert-card.signal-yellow { background: var(--yellow-bg); border-color: var(--yellow-border); }
+.alert-card.signal-red { background: var(--red-bg); border-color: var(--red-border); }
+
+.alert-signal { font-size: 18px; flex-shrink: 0; }
+
+.alert-body { flex: 1; min-width: 0; }
+.alert-team { font-size: 14px; font-weight: 700; }
+.alert-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.alert-edge { flex-shrink: 0; text-align: right; }
+.alert-edge-value {
+  font-size: 22px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+.signal-green .alert-edge-value { color: var(--green); }
+.signal-yellow .alert-edge-value { color: var(--yellow); }
+.signal-red .alert-edge-value { color: var(--red); }
+.alert-edge-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--poly-teal);
+  color: #000;
+  font-size: 11px;
+  font-weight: 800;
+  border-radius: 100px;
+}
+
+.empty-state {
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: var(--space-md);
+}
+
+/* ============================================================
+   STATS BAR
+   ============================================================ */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.stat-item {
+  background: var(--bg-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px var(--space-sm);
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--poly-teal);
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   VIEW TOGGLE
+   ============================================================ */
+.view-toggle {
+  display: flex;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  gap: 2px;
+}
+.view-btn {
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: 5px;
+  background: transparent;
+  transition: all var(--transition);
+  letter-spacing: 0.2px;
+}
+.view-btn.active { background: var(--bg-elevated); color: var(--text-primary); }
+
+/* ============================================================
+   GAMES CONTAINER
+   ============================================================ */
+.games-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ============================================================
+   GAME CARD — Polymarket prediction market style
+   ============================================================ */
+.game-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-card);
+}
+.game-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-default);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.game-card:active { transform: translateY(0); }
+
+/* Left accent border for alerts */
+.game-card.alert-high  { border-left: 3px solid var(--poly-teal); }
+.game-card.alert-medium { border-left: 3px solid var(--yellow); }
+
+/* --- Card Header --- */
+.game-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.game-time { font-size: 11px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.2px; }
+
+.game-status-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.status-scheduled { background: var(--bg-elevated); color: var(--text-muted); }
+.status-live {
+  background: var(--red-bg);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+  animation: pulse-live 2s infinite;
+}
+.status-final { background: var(--bg-elevated); color: var(--text-muted); }
+
+@keyframes pulse-live {
+  0%,100% { border-color: var(--red-border); }
+  50% { border-color: var(--red); }
+}
+
+/* --- Polymarket-style probability display ---
+   Two outcome buttons side by side, like Polymarket's Yes/No */
+.game-outcomes {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Team matchup line at top */
+.matchup-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.matchup-teams {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.matchup-meta {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.flag {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 100px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.flag-b2b { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-border); }
+.flag-injury { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.flag-live { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+
+/* Outcome row: two cards side by side (like Polymarket Yes/No) */
+.outcome-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.outcome-btn {
+  position: relative;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 12px var(--space-md);
+  text-align: left;
+  transition: all var(--transition);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Probability fill bar at the bottom (like Polymarket's progress bar) */
+.outcome-btn::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: var(--prob-width, 50%);
+  border-radius: 0 2px 0 0;
+  transition: width 0.4s ease;
+}
+
+.outcome-btn.yes-side::before { background: var(--yes-color); }
+.outcome-btn.no-side::before  { background: var(--no-color); }
+
+.outcome-btn.yes-side {
+  border-color: var(--yes-border);
+  background: linear-gradient(180deg, var(--yes-bg) 0%, var(--bg-elevated) 100%);
+}
+.outcome-btn.no-side {
+  border-color: var(--no-border);
+  background: linear-gradient(180deg, var(--no-bg) 0%, var(--bg-elevated) 100%);
+}
+
+.outcome-team-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.outcome-home-tag {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Polymarket price — the big number */
+.outcome-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.poly-price {
+  font-size: 26px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+.outcome-btn.yes-side .poly-price { color: var(--yes-color); }
+.outcome-btn.no-side .poly-price  { color: var(--no-color); }
+.poly-price.na { color: var(--text-muted); font-size: 18px; }
+
+.poly-pct { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+/* Book odds comparison below price */
+.outcome-book-odds {
+  font-size: 11px;
+  color: var(--book-color);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+.outcome-book-label { font-size: 9px; color: var(--text-muted); }
+
+/* Edge indicator between the two outcome cards */
+.edge-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.edge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid;
+}
+.edge-pill.signal-green { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+.edge-pill.signal-yellow { background: var(--yellow-bg); color: var(--yellow); border-color: var(--yellow-border); }
+.edge-pill.signal-red { background: var(--red-bg); color: var(--red); border-color: var(--red-border); }
+.edge-pill.signal-none { background: var(--bg-elevated); color: var(--text-muted); border-color: var(--border-subtle); }
+
+.edge-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.signal-green .edge-pill-dot { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.signal-yellow .edge-pill-dot { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
+.signal-red .edge-pill-dot { background: var(--red); box-shadow: 0 0 6px var(--red); }
+.signal-none .edge-pill-dot { background: var(--text-muted); }
+
+/* Score if game is in progress */
+.live-score-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: 6px var(--space-md);
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+}
+.live-score-team {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.live-score-num {
+  font-size: 20px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}
+.live-score-sep { color: var(--text-muted); font-size: 12px; }
+.live-period {
+  font-size: 10px;
+  color: var(--red);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Injury chip row at bottom of card */
+.injury-chips {
+  display: flex;
+  gap: var(--space-xs);
+  padding: 7px var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  background: var(--bg-surface);
+}
+.injury-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  padding: 2px 8px;
+  border-radius: 100px;
+  border: 1px solid var(--border-subtle);
+}
+.injury-chip-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.injury-chip-dot.out { background: var(--red); }
+.injury-chip-dot.questionable { background: var(--yellow); }
+.injury-chip-dot.probable { background: var(--green); }
+
+/* "Tap for details" hint */
+.card-tap-hint {
+  text-align: center;
+  padding: 5px;
+  font-size: 10px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border-subtle);
+  letter-spacing: 0.3px;
+}
+
+/* ============================================================
+   COMPACT VIEW
+   ============================================================ */
+.compact-view .game-card { border-radius: var(--radius-md); }
+.compact-view .game-outcomes { padding: var(--space-sm) var(--space-md); }
+.compact-view .poly-price { font-size: 20px; }
+.compact-view .outcome-btn { padding: 8px 12px; }
+
+/* ============================================================
+   MODAL — slides up from bottom (mobile-first)
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fadeIn 0.15s ease;
+}
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.modal-container {
+  width: 100%;
+  max-width: 720px;
+  max-height: 93vh;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-bottom: none;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-modal);
+  animation: slideUp 0.2s cubic-bezier(0.32, 0.72, 0, 1);
+}
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Drag handle at top of modal */
+.modal-container::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 4px;
+  background: var(--border-muted);
+  border-radius: 2px;
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+.modal-title { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; }
+
+.modal-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+.modal-close:hover { background: var(--red-bg); color: var(--red); }
+
+.modal-body {
+  overflow-y: auto;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* Modal sections */
+.modal-section {}
+.modal-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Probability comparison — Polymarket style side-by-side */
+.prob-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.prob-team-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.prob-team-header {
+  padding: 8px var(--space-md);
+  background: var(--bg-elevated);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.prob-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.prob-row:last-child { border-bottom: none; }
+.prob-row-label { font-size: 11px; color: var(--text-muted); }
+.prob-row-val {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.prob-row-val.poly { color: var(--yes-color); }
+.prob-row-val.book { color: var(--book-color); }
+.prob-row-val.edge-pos { color: var(--green); }
+.prob-row-val.edge-neg { color: var(--red); }
+.prob-row-val.edge-neu { color: var(--text-muted); }
+
+/* Head-to-head record */
+.h2h-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.h2h-header {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.h2h-matchup-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.h2h-team-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  width: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.h2h-team-label.right { text-align: right; }
+
+.h2h-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-elevated);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+}
+
+.h2h-bar-home {
+  background: var(--yes-color);
+  border-radius: 4px 0 0 4px;
+  transition: width 0.5s ease;
+}
+.h2h-bar-away {
+  background: var(--no-color);
+  border-radius: 0 4px 4px 0;
+  transition: width 0.5s ease;
+}
+
+.h2h-records {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.h2h-win-count {
+  font-size: 13px;
+  font-weight: 700;
+}
+.h2h-win-count.home { color: var(--yes-color); }
+.h2h-win-count.away { color: var(--no-color); }
+
+.h2h-recent {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.h2h-game-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.h2h-game-row:last-child { border-bottom: none; }
+.h2h-game-result { font-weight: 700; }
+.h2h-win { color: var(--green); }
+.h2h-loss { color: var(--red); }
+
+/* Box score projection */
+.projection-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.projection-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.projection-header {
+  padding: 8px var(--space-md);
+  background: var(--bg-elevated);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.projection-total {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.projection-pts {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--poly-teal);
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+.projection-pts-label { font-size: 11px; color: var(--text-muted); }
+
+/* Impact badge */
+.projection-impact {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 12px;
+}
+.impact-label { color: var(--text-muted); }
+.impact-value { font-weight: 700; font-family: var(--font-mono); }
+.impact-value.negative { color: var(--red); }
+.impact-value.neutral { color: var(--text-muted); }
+
+/* Player list in projection */
+.stat-col-headers {
+  display: grid;
+  grid-template-columns: 1fr 38px 34px 34px 34px;
+  padding: 4px var(--space-md);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 4px;
+}
+.stat-col { text-align: right; }
+
+.player-row {
+  display: grid;
+  grid-template-columns: 1fr 38px 34px 34px 34px;
+  padding: 5px var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 11px;
+  gap: 4px;
+  align-items: center;
+}
+.player-row:first-child { border-top: none; }
+.player-row.is-out { opacity: 0.35; }
+.player-row:hover { background: var(--bg-elevated); }
+
+.player-name {
+  font-weight: 600;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.player-pos {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.player-stat {
+  text-align: right;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.player-stat.highlight { color: var(--text-primary); font-weight: 600; }
+
+/* Injury report */
+.injury-section-teams {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.injury-team-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.injury-team-name {
+  padding: 8px var(--space-md);
+  background: var(--bg-elevated);
+  font-size: 12px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.injury-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+}
+.injury-row:first-child { border-top: none; }
+
+.injury-player-info {}
+.injury-player-name { font-size: 13px; font-weight: 600; }
+.injury-player-desc { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+
+.inj-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  letter-spacing: 0.3px;
+}
+.inj-out { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.inj-doubtful { background: var(--orange-bg); color: var(--orange); border: 1px solid rgba(249,115,22,0.3); }
+.inj-questionable { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-border); }
+.inj-probable { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+/* Records grid */
+.records-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+.record-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+.record-card-team { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-sm); }
+.record-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  padding: 3px 0;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.record-row:last-child { border-bottom: none; }
+.record-val { font-weight: 700; font-family: var(--font-mono); color: var(--text-primary); }
+
+/* B2B warning */
+.b2b-alert {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--yellow-bg);
+  border: 1px solid var(--yellow-border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--yellow);
+  font-weight: 600;
+}
+
+/* No data state */
+.no-data-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px dashed var(--border-default);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.app-footer {
+  text-align: center;
+  padding: var(--space-xl) var(--space-md);
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  margin-top: var(--space-xl);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (min-width: 640px) {
+  .app-main { padding: var(--space-lg); }
+  .logo { font-size: 18px; }
+  .poly-price { font-size: 30px; }
+}
+
+@media (min-width: 900px) {
+  .modal-overlay { align-items: center; }
+  .modal-container {
+    border-bottom: 1px solid var(--border-default);
+    border-radius: var(--radius-xl);
+    max-height: 88vh;
+  }
+  .modal-container::before { display: none; }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border-muted); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
