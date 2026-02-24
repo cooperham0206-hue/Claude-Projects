@@ -1,1 +1,4 @@
 providers = ["python"]
+
+[phases.install]
+cmds = ["pip install -r nba-polymarket-edge/requirements.txt"]
